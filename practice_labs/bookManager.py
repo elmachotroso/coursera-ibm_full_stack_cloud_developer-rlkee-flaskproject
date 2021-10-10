@@ -1,22 +1,48 @@
-from flask import Flask, render_template
+#!/usr/bin/env python3
+
+"""
+bookManager
+"""
+
 import json
+from flask import Flask, render_template
 
-app = Flask("Book Manager")
-books = []
+FLASK_APP = Flask( "Book Manager", static_folder = "static" )
+BOOKS = []
 
-@app.route("/addBook/<bookname>/<author>")
-def addBook(bookname,author):
-    books.append({"bookname":bookname,"author":author})
-    return "%s by %s appended" %(bookname,author)
+@FLASK_APP.route( "/addBook/<bookname>/<author>" )
+def add_Book ( bookname, author ):
+    """
+    Endpoint: add_book
+    Method: GET
+    Adds a book given the title and author.
+    """
+    BOOKS.append( { "bookname" : bookname, "author" : author } )
+    return f"{ bookname } by { author } appended."
 
-@app.route("/getBooks")
-def getBooks():
-    return json.dumps(books)
+@FLASK_APP.route( "/getBooks" )
+def get_books():
+    """
+    Endpoint: get_books
+    Method: GET
+    Display all known books.
+    """
+    return json.dumps( BOOKS )
 
-@app.route("/")
+@FLASK_APP.route( "/" )
 def homepage():
-    return render_template("index.html")
+    """
+    Endpoint: homepage (index)
+    Method: GET
+    Displays the static index page.
+    """
+    return render_template( "index.html" )
+
+def main():
+    """
+    Main function
+    """
+    FLASK_APP.run( debug = True, port = 5000 )
 
 if __name__=="__main__":
-    app.run(debug=True) 
-    # When no port is specified, starts at default port 5000
+    main()

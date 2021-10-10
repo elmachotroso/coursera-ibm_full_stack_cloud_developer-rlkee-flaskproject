@@ -1,13 +1,25 @@
+#!/usr/bin/env python3
+
+"""
+First Web Application Using Flask
+"""
+
 from flask import Flask
 
-app = Flask("My First Flask Application")
+FLASK_APP = Flask( "My First Flask Application" )
 
-
-@app.route("/")
+@FLASK_APP.route( "/" )
 def hello():
+    """
+    Functionality associated with endpoint: hello
+    """
     return "Hello World!"
 
+def main():
+    """
+    Main function
+    """
+    FLASK_APP.run( debug = True, port = 5000 )
 
-if __name__=="__main__":
-    app.run(debug=True) 
-    # When no port is specified, starts at default port 5000
+if __name__ == "__main__":
+    main()
